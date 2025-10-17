@@ -1,4 +1,5 @@
 import { useContext, useState } from "react";
+import AuthContext from "../context/AuthContext";
 import {
   Navbar,
   Container,
@@ -10,8 +11,18 @@ import {
 } from "react-bootstrap";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import CartContext from "../context/CartContext";
+import {
+  FaShoppingCart,
+  FaUser,
+  FaShareSquare,
+  FaBoxOpen,
+  FaHome,
+  FaTruck,
+  FaWrench,
+} from "react-icons/fa";
 
 const Header = () => {
+  const { user, logout } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
   const { cartItems } = useContext(CartContext);
@@ -25,11 +36,9 @@ const Header = () => {
     return cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
   };
 
-  const isAuth = localStorage.getItem("auth") === "true";
-
   const cerrarSession = () => {
-    localStorage.removeItem("auth");
-    navigate("/login");
+    logout();
+    navigate("/");
   };
 
   const isActiveRoute = (path) => {
@@ -44,12 +53,15 @@ const Header = () => {
       style={{ width: "350px" }}
     >
       <Offcanvas.Header closeButton className="border-bottom">
-        <Offcanvas.Title>🛒 Mi Carrito ({getTotalItems()})</Offcanvas.Title>
+        <Offcanvas.Title>
+          <FaShoppingCart size={32} className="me-2 text-primary" />
+          Mi Carrito ({getTotalItems()})
+        </Offcanvas.Title>
       </Offcanvas.Header>
       <Offcanvas.Body className="p-0">
         {cartItems.length === 0 ? (
           <div className="text-center py-4">
-            <div style={{ fontSize: "3rem" }}>🛒</div>
+            <FaShoppingCart size={64} />
             <p className="text-muted mt-2">Tu carrito está vacío</p>
           </div>
         ) : (
@@ -127,28 +139,27 @@ const Header = () => {
         bg="white"
         variant="light"
         expand="lg"
-        className="shadow-sm border-bottom fixed-top" // ← fixed-top aquí
-        style={{ zIndex: 1030 }} // Asegurar que esté por encima de otros elementos
+        className="shadow-sm border-bottom fixed-top"
+        style={{ zIndex: 1030 }}
       >
         <Container>
-          {/* Logo y Brand */}
           <Navbar.Brand
             as={Link}
             to="/"
             className="d-flex align-items-center fw-bold text-primary"
           >
-            <span className="fs-4">🛍️</span>
+            <span className="fs-4"></span>
+            <FaTruck size={32} className="ms-2" />
             <span className="ms-2">E-Commerce</span>
           </Navbar.Brand>
 
           <div className="d-flex align-items-center d-lg-none">
-            {/* Carrito para móvil */}
             <Button
               variant="outline-primary"
               className="position-relative me-2"
               onClick={() => setShowCartPreview(true)}
             >
-              🛒
+              <FaShoppingCart size={22} className="me-2" />
               {getTotalItems() > 0 && (
                 <Badge
                   bg="danger"
@@ -164,7 +175,6 @@ const Header = () => {
           </div>
 
           <Navbar.Collapse id="basic-navbar-nav">
-            {/* Navegación Principal */}
             <Nav className="mx-auto">
               <Nav.Link
                 as={Link}
@@ -173,7 +183,8 @@ const Header = () => {
                   isActiveRoute("/") ? "text-primary" : "text-dark"
                 }`}
               >
-                🏠 Inicio
+                <FaHome size={22} className="me-2" />
+                Inicio
               </Nav.Link>
               <Nav.Link
                 as={Link}
@@ -182,10 +193,11 @@ const Header = () => {
                   isActiveRoute("/productos") ? "text-primary" : "text-dark"
                 }`}
               >
-                📦 Productos
+                <FaBoxOpen size={22} className="me-2" />
+                Productos
               </Nav.Link>
 
-              {isAuth && (
+              {user && (
                 <Nav.Link
                   as={Link}
                   to="/admin"
@@ -193,7 +205,8 @@ const Header = () => {
                     isActiveRoute("/admin") ? "text-primary" : "text-dark"
                   }`}
                 >
-                  ⚙️ Admin
+                  <FaWrench size={16} className="me-2" />
+                  Admin
                 </Nav.Link>
               )}
             </Nav>
@@ -206,7 +219,7 @@ const Header = () => {
                 className="position-relative d-none d-lg-flex align-items-center me-3"
                 onClick={() => setShowCartPreview(true)}
               >
-                <span className="me-2">🛒</span>
+                <FaShoppingCart size={22} className="me-2" />
                 Carrito
                 {getTotalItems() > 0 && (
                   <Badge
@@ -219,30 +232,34 @@ const Header = () => {
               </Button>
 
               {/* Usuario */}
-              {isAuth ? (
+              {user ? (
                 <Dropdown align="end">
                   <Dropdown.Toggle
                     variant="outline-success"
                     id="dropdown-user"
                     className="d-flex align-items-center"
                   >
-                    👤 Mi Cuenta
+                    <FaUser size={16} className="me-2" />
+                    Bienvenido {user.name.firstname}
                   </Dropdown.Toggle>
 
                   <Dropdown.Menu>
-                    <Dropdown.Header>Bienvenido de vuelta</Dropdown.Header>
+                    <Dropdown.Header>Mi cuenta</Dropdown.Header>
                     <Dropdown.Item as={Link} to="/perfil">
-                      👤 Mi Perfil
+                      <FaUser size={16} className="me-2" />
+                      Mi Perfil
                     </Dropdown.Item>
                     <Dropdown.Item as={Link} to="/pedidos">
-                      📦 Mis Pedidos
+                      <FaShoppingCart size={16} className="me-2" />
+                      Mis Pedidos
                     </Dropdown.Item>
                     <Dropdown.Divider />
                     <Dropdown.Item
                       onClick={cerrarSession}
                       className="text-danger"
                     >
-                      🚪 Cerrar Sesión
+                      <FaShareSquare size={16} className="me-2" />
+                      Cerrar Sesión
                     </Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
@@ -253,7 +270,8 @@ const Header = () => {
                   variant="primary"
                   className="d-flex align-items-center"
                 >
-                  🔑 Iniciar Sesión
+                  <FaUser size={22} className="me-2" />
+                  Iniciar Sesión
                 </Button>
               )}
             </Nav>

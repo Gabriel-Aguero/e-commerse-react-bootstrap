@@ -1,6 +1,7 @@
 // src/pages/CartPage.jsx
 import { useContext, useState } from "react";
 import CartContext from "../context/CartContext";
+import { FaShoppingCart, FaTrash } from "react-icons/fa";
 
 const CartPage = () => {
   const { cartItems, removeFromCart, clearCart, updateQuantity, total } =
@@ -31,7 +32,9 @@ const CartPage = () => {
       <div className="row">
         <div className="col-12">
           <div className="d-flex justify-content-between align-items-center mb-4">
-            <h1 className="h3 mb-0">🛒 Mi Carrito</h1>
+            <h1 className="h3 mb-0">
+              <FaShoppingCart size={32} className="me-2" /> Mi Carrito
+            </h1>
             <span className="badge bg-primary fs-6">
               {getTotalItems()}{" "}
               {getTotalItems() === 1 ? "producto" : "productos"}
@@ -41,7 +44,7 @@ const CartPage = () => {
           {cartItems.length === 0 ? (
             <div className="text-center py-5">
               <div className="mb-4" style={{ fontSize: "4rem" }}>
-                🛒
+                <FaShoppingCart size={32} />
               </div>
               <h3 className="text-muted mb-3">Tu carrito está vacío</h3>
               <p className="text-muted mb-4">
@@ -49,7 +52,7 @@ const CartPage = () => {
               </p>
               <button
                 className="btn btn-primary btn-lg"
-                onClick={() => (window.location.href = "/")}
+                onClick={() => (window.location.href = "/productos")}
               >
                 Continuar Comprando
               </button>
@@ -125,7 +128,7 @@ const CartPage = () => {
                           onClick={() => removeFromCart(item.id)}
                           title="Eliminar producto"
                         >
-                          🗑️
+                          <FaTrash size={22} />
                         </button>
                       </div>
                     ))}
@@ -136,7 +139,7 @@ const CartPage = () => {
                 <div className="d-flex gap-2 mt-3">
                   <button
                     className="btn btn-outline-secondary"
-                    onClick={() => (window.location.href = "/")}
+                    onClick={() => (window.location.href = "/productos")}
                   >
                     ← Continuar Comprando
                   </button>

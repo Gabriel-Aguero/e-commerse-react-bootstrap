@@ -1,66 +1,217 @@
 // components/Footer.js
 import React from "react";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Button } from "react-bootstrap";
+import {
+  FaLinkedin,
+  FaWhatsapp,
+  FaEnvelope,
+  FaGithub,
+  FaHeart,
+  FaArrowUp,
+  FaShieldAlt,
+  FaRocket,
+  FaUsers,
+} from "react-icons/fa";
 
 const Footer = () => {
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const misRedesSociales = [
+    {
+      icon: FaLinkedin,
+      href: "https://www.linkedin.com/in/gabrielhaguero/",
+      color: "text-info",
+      bg: "bg-info",
+      label: "LinkedIn",
+    },
+    {
+      icon: FaWhatsapp,
+      href: "https://wa.me/1139392570",
+      color: "text-success",
+      bg: "bg-success",
+      label: "WhatsApp",
+    },
+    {
+      icon: FaEnvelope,
+      href: "mailto:gabriel.aguero@gmail.com",
+      color: "text-warning",
+      bg: "bg-warning",
+      label: "Email",
+    },
+    {
+      icon: FaGithub,
+      href: "https://github.com/gabrielhaguero",
+      color: "text-light",
+      bg: "bg-secondary",
+      label: "GitHub",
+    },
+  ];
+
   return (
-    <footer className="bg-dark text-light mt-5">
-      <Container className="py-4">
-        <Row>
-          <Col md={4}>
-            <h5>Mi App</h5>
-            <p>
-              Una aplicación moderna construida con React y Bootstrap para
-              ofrecer la mejor experiencia de usuario.
+    <footer className="bg-dark text-light pt-5 position-relative">
+      {/* Ola decorativa superior */}
+      <div
+        className="position-absolute top-0 start-0 w-100"
+        style={{
+          height: "20px",
+          background: "linear-gradient(90deg, #0d6efd, #6f42c1, #d63384)",
+          opacity: "0.8",
+          clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 70%)",
+        }}
+      ></div>
+
+      <Container className="pt-4">
+        <Row className="g-4">
+          <Col lg={4} md={6}>
+            <div className="d-flex align-items-center mb-3">
+              <div className="bg-primary rounded-circle p-2 me-3">
+                <FaRocket className="text-white fs-4" />
+              </div>
+              <h4 className="mb-0 fw-bold text-primary">E-Commerce Pro</h4>
+            </div>
+            <p className="text-light mb-4 opacity-75">
+              Tu destino de compras online de confianza. Ofrecemos productos de
+              calidad con entrega rápida y soporte excepcional 24/7.
             </p>
           </Col>
 
-          <Col md={4}>
-            <h5>Enlaces Rápidos</h5>
+          {/* Columna 2 - Enlaces rápidos */}
+          <Col lg={2} md={6}>
+            <h6 className="fw-bold text-primary mb-3">Navegación</h6>
             <ul className="list-unstyled">
-              <li>
-                <a href="/" className="text-light text-decoration-none">
-                  Inicio
-                </a>
-              </li>
-              <li>
-                <a href="/about" className="text-light text-decoration-none">
-                  Acerca de
-                </a>
-              </li>
-              <li>
-                <a href="/contact" className="text-light text-decoration-none">
-                  Contacto
-                </a>
-              </li>
-              <li>
-                <a href="/privacy" className="text-light text-decoration-none">
-                  Política de Privacidad
-                </a>
-              </li>
+              {[
+                { name: "Inicio", path: "/" },
+                { name: "Productos", path: "/productos" },
+                { name: "Carrito", path: "/carrito" },
+              ].map((link, index) => (
+                <li key={index} className="mb-2">
+                  <a
+                    href={link.path}
+                    className="text-light text-decoration-none opacity-75 hover-opacity-100 transition"
+                    style={{ transition: "opacity 0.3s" }}
+                  >
+                    {link.name}
+                  </a>
+                </li>
+              ))}
             </ul>
           </Col>
 
-          <Col md={4}>
-            <h5>Contacto</h5>
+          {/* Columna 3 - Soporte */}
+          <Col lg={2} md={6}>
+            <h6 className="fw-bold text-primary mb-3">Soporte</h6>
             <ul className="list-unstyled">
-              <li>Email: info@miapp.com</li>
-              <li>Teléfono: +1 234 567 890</li>
-              <li>Dirección: Calle Principal 123</li>
+              {[
+                { name: "Centro de Ayuda", path: "/help" },
+                { name: "Envíos", path: "/shipping" },
+                { name: "Devoluciones", path: "/returns" },
+                { name: "Términos", path: "/terms" },
+                { name: "Privacidad", path: "/privacy" },
+              ].map((link, index) => (
+                <li key={index} className="mb-2">
+                  <a
+                    href={link.path}
+                    className="text-light text-decoration-none opacity-75 hover-opacity-100 transition"
+                    style={{ transition: "opacity 0.3s" }}
+                  >
+                    {link.name}
+                  </a>
+                </li>
+              ))}
             </ul>
+          </Col>
+
+          {/* Columna 4 - Contacto y redes */}
+          <Col lg={4} md={6}>
+            <h6 className="fw-bold text-primary mb-3">Conectemos</h6>
+            <p className="text-light opacity-75 mb-4">
+              ¿Tienes preguntas? No dudes en contactarme. Estoy aquí para
+              ayudarte.
+            </p>
+
+            {/* Redes sociales */}
+            <div className="mb-4">
+              <h6 className="fw-bold text-light mb-3">Sígueme</h6>
+              <div className="d-flex gap-3 justify-content-center">
+                {misRedesSociales.map((social, index) => (
+                  <a
+                    key={index}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`${social.bg} text-white rounded-circle p-3 d-flex align-items-center justify-content-center hover-scale transition`}
+                    style={{
+                      width: "50px",
+                      height: "50px",
+                      textDecoration: "none",
+                      transition: "transform 0.3s",
+                    }}
+                    title={social.label}
+                  >
+                    <social.icon size={20} />
+                  </a>
+                ))}
+              </div>
+            </div>
           </Col>
         </Row>
 
-        <hr className="bg-light" />
+        {/* Línea divisoria */}
+        <hr className="my-4 bg-light opacity-25" />
 
-        <Row>
-          <Col className="text-center">
-            <p>
-              &copy; 2025. Creada con ❤️ por Gabriel Agüero - Frontend Developer
+        {/* Bottom section */}
+        <Row className="align-items-center py-4">
+          <Col md={6} className="text-center text-md-start">
+            <p className="mb-0 text-light opacity-75">
+              &copy; 2025{" "}
+              <span className="text-primary fw-bold">E-Commerce Pro</span>.
+              Todos los derechos reservados.
             </p>
           </Col>
+          <Col md={6} className="text-center text-md-end">
+            <div className="d-flex align-items-center justify-content-center justify-content-md-end">
+              <span className="text-light opacity-75 me-2">
+                Creado con <FaHeart className="text-danger mx-1" /> por
+              </span>
+              <span className="fw-bold text-primary">Gabriel Agüero</span>
+              <span className="text-light opacity-75 ms-2">
+                - Frontend Developer
+              </span>
+            </div>
+          </Col>
         </Row>
+
+        {/* Botón flotante para ir arriba */}
+        <Button
+          variant="primary"
+          className="position-absolute end-0 bottom-0 m-4 rounded-circle d-flex align-items-center justify-content-center"
+          style={{
+            width: "50px",
+            height: "50px",
+            zIndex: 1000,
+          }}
+          onClick={scrollToTop}
+          title="Volver arriba"
+        >
+          <FaArrowUp />
+        </Button>
       </Container>
+
+      {/* Estilos CSS inline para hover effects */}
+      <style jsx>{`
+        .hover-opacity-100:hover {
+          opacity: 1 !important;
+          transform: translateX(5px);
+        }
+        .hover-scale:hover {
+          transform: scale(1.1);
+        }
+        .transition {
+          transition: all 0.3s ease;
+        }
+      `}</style>
     </footer>
   );
 };

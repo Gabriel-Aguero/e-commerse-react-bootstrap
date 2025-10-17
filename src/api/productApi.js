@@ -13,7 +13,7 @@ export const getProductById = async (id) => {
 };
 
 export const getCategories = async () => {
-  return fetch(`${BASE_URL}categories`)
+  return fetch(`${BASE_URL}/products/categories`)
     .then((res) => res.json())
     .then((data) => data);
 };

@@ -30,6 +30,15 @@ export const CartProvider = ({ children }) => {
     setCartItems([]);
   };
 
+  // Actualizar cantidad
+  const updateQuantity = (id, newQuantity) => {
+    setCartItems((prev) =>
+      prev.map((item) =>
+        item.id === id ? { ...item, quantity: newQuantity } : item
+      )
+    );
+  };
+
   // Calcular total
   const total = cartItems.reduce(
     (acc, item) => acc + item.price * item.quantity,
@@ -48,7 +57,14 @@ export const CartProvider = ({ children }) => {
 
   return (
     <CartContext.Provider
-      value={{ total, addToCart, removeFromCart, clearCart, cartItems }}
+      value={{
+        total,
+        addToCart,
+        removeFromCart,
+        clearCart,
+        cartItems,
+        updateQuantity,
+      }}
     >
       {children}
     </CartContext.Provider>

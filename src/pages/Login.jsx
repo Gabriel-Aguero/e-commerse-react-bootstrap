@@ -10,15 +10,17 @@ import {
   Alert,
 } from "react-bootstrap";
 import AuthContext from "../context/AuthContext.jsx";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const { login } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    email: "",
+    username: "",
     password: "",
   });
-  const [showAlert, setShowAlert] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
@@ -28,11 +30,18 @@ const Login = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    await login(formData.email, formData.password);
-    console.log("Session iniciada con exito", formData);
-    setShowAlert(true);
-    setTimeout(() => setShowAlert(false), 3000);
+    try {
+      e.preventDefault();
+      await login(formData.username, formData.password);
+      Swal.fire("Sesión iniciada correctamente", "¡Bienvenido!");
+      navigate("/admin");
+    } catch (error) {
+      Swal.fire(
+        "Error al iniciar sesión",
+        "Usuario o contraseña incorrectos",
+        error
+      );
+    }
   };
 
   return (
@@ -45,18 +54,14 @@ const Login = () => {
                 <h3>Iniciar Sesión</h3>
               </Card.Title>
 
-              {showAlert && (
-                <Alert variant="success">¡Inicio de sesión exitoso!</Alert>
-              )}
-
               <Form onSubmit={handleSubmit}>
                 <Form.Group className="mb-3">
                   <Form.Label>Email</Form.Label>
                   <Form.Control
                     type="text"
-                    name="email"
-                    placeholder="Ingresa tu email"
-                    value={formData.email}
+                    name="username"
+                    placeholder="Ingresa tu usuario"
+                    value={formData.username}
                     onChange={handleChange}
                     required
                   />
