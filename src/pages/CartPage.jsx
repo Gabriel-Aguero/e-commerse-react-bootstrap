@@ -64,74 +64,94 @@ const CartPage = () => {
               {/* Lista de Productos */}
               <div className="col-lg-8">
                 <div className="card shadow-sm">
-                  <div className="card-header bg-white">
-                    <h5 className="mb-0">Productos en el carrito</h5>
+                  <div className="card-header bg-white flex-col justify-content-between align-items-center">
+                    <h5 className="mb-0">
+                      <FaShoppingCart size={32} className="me-2" />
+                      Productos en el carrito
+                    </h5>
+                    <span className="badge bg-primary">
+                      {cartItems.length}{" "}
+                      {cartItems.length === 1 ? "producto" : "productos"}
+                    </span>
                   </div>
                   <div className="card-body p-0">
                     {cartItems.map((item) => (
-                      <div
-                        key={item.id}
-                        className="border-bottom p-3 d-flex align-items-center"
-                      >
-                        <img
-                          src={item.image}
-                          alt={item.title}
-                          className="rounded"
-                          style={{
-                            width: "80px",
-                            height: "80px",
-                            objectFit: "contain",
-                          }}
-                        />
+                      <div key={item.id} className="border-bottom p-3">
+                        <div className="row align-items-center">
+                          {/* Imagen del producto */}
+                          <div className="col-3">
+                            <img
+                              src={item.image}
+                              alt={item.title}
+                              className="rounded img-fluid"
+                              style={{
+                                width: "60px",
+                                height: "60px",
+                                objectFit: "contain",
+                              }}
+                            />
+                          </div>
 
-                        <div className="flex-grow-1 ms-3">
-                          <h6 className="mb-1">{item.title}</h6>
-                          <p className="text-muted mb-1 small">
-                            ${item.price} c/u
-                          </p>
+                          {/* Información del producto */}
+                          <div className="col-6">
+                            <h6 className="mb-1 small fw-bold text-truncate">
+                              {item.title}
+                            </h6>
+                            <p className="text-muted mb-1 small">
+                              ${item.price} c/u
+                            </p>
+                            <div className="d-flex align-items-center mt-2">
+                              {/* Selector de cantidad */}
+                              <div className="d-flex align-items-center">
+                                <button
+                                  className="btn btn-outline-secondary btn-sm"
+                                  onClick={() =>
+                                    handleQuantityChange(
+                                      item.id,
+                                      item.quantity - 1
+                                    )
+                                  }
+                                  disabled={item.quantity <= 1}
+                                  style={{ width: "32px", height: "32px" }}
+                                >
+                                  −
+                                </button>
+                                <span className="mx-2 fw-bold">
+                                  {item.quantity}
+                                </span>
+                                <button
+                                  className="btn btn-outline-secondary btn-sm"
+                                  onClick={() =>
+                                    handleQuantityChange(
+                                      item.id,
+                                      item.quantity + 1
+                                    )
+                                  }
+                                  style={{ width: "32px", height: "32px" }}
+                                >
+                                  +
+                                </button>
+                              </div>
+                            </div>
+                          </div>
 
-                          <div className="d-flex align-items-center">
-                            {/* Selector de cantidad */}
-                            <div className="d-flex align-items-center me-3">
+                          {/* Precio y eliminar */}
+                          <div className="col-3 text-end">
+                            <div className="d-flex flex-column align-items-end gap-2">
+                              <span className="text-primary fw-bold">
+                                ${(item.price * item.quantity).toFixed(2)}
+                              </span>
                               <button
-                                className="btn btn-outline-secondary btn-sm"
-                                onClick={() =>
-                                  handleQuantityChange(
-                                    item.id,
-                                    item.quantity - 1
-                                  )
-                                }
-                                disabled={item.quantity <= 1}
+                                className="btn btn-outline-danger btn-sm"
+                                onClick={() => removeFromCart(item.id)}
+                                title="Eliminar producto"
+                                style={{ width: "32px", height: "32px" }}
                               >
-                                −
-                              </button>
-                              <span className="mx-3">{item.quantity}</span>
-                              <button
-                                className="btn btn-outline-secondary btn-sm"
-                                onClick={() =>
-                                  handleQuantityChange(
-                                    item.id,
-                                    item.quantity + 1
-                                  )
-                                }
-                              >
-                                +
+                                <FaTrash size={14} />
                               </button>
                             </div>
-
-                            <span className="text-primary fw-bold">
-                              ${(item.price * item.quantity).toFixed(2)}
-                            </span>
                           </div>
                         </div>
-
-                        <button
-                          className="btn btn-outline-danger btn-sm ms-3"
-                          onClick={() => removeFromCart(item.id)}
-                          title="Eliminar producto"
-                        >
-                          <FaTrash size={22} />
-                        </button>
                       </div>
                     ))}
                   </div>
