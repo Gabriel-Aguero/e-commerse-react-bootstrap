@@ -2,11 +2,13 @@
 import { useContext, useState } from "react";
 import CartContext from "../context/CartContext";
 import { FaShoppingCart, FaTrash } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const CartPage = () => {
   const { cartItems, removeFromCart, clearCart, updateQuantity, total } =
     useContext(CartContext);
   const [isCheckingOut, setIsCheckingOut] = useState(false);
+  const navigate = useNavigate();
 
   const handleQuantityChange = (id, newQuantity) => {
     if (newQuantity < 1) return;
@@ -52,7 +54,7 @@ const CartPage = () => {
               </p>
               <button
                 className="btn btn-primary btn-lg"
-                onClick={() => (window.location.href = "/productos")}
+                onClick={() => navigate("/productos")}
               >
                 Continuar Comprando
               </button>
@@ -139,7 +141,7 @@ const CartPage = () => {
                 <div className="d-flex gap-2 mt-3">
                   <button
                     className="btn btn-outline-secondary"
-                    onClick={() => (window.location.href = "/productos")}
+                    onClick={() => navigate("/productos")}
                   >
                     ← Continuar Comprando
                   </button>
