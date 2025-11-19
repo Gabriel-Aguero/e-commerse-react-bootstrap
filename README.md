@@ -1,16 +1,94 @@
-# React + Vite
+# 🛒 Ecommerce App
+Este es un proyecto fue realizado bajo en el marco del curso de react de Telento Tech. 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Ecommerce con React y Bootstrap
 
-Currently, two official plugins are available:
+Una aplicación de comercio electrónico moderna que consume la Fake Store API para mostrar productos, categorías y simular una experiencia de compra real.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Tecnologías Utilizadas
 
-## React Compiler
+🟢​ Frontend: React.js / Vite 
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+🟢​ Estilos: Bootstrap
 
-## Expanding the ESLint configuration
+🟢​ Estado: Context API 
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+🟢​ HTTP: Fetch API
+
+🟢​ API: Fake Store API
+
+## 📋 Prerrequisitos
+🟢​ Node.js (versión 14 o superior)
+
+🟢​ npm 
+
+🟢​ Navegador web moderno
+
+## 🛠️ Instalación
+
+```
+git clone https://github.com/Gabriel-Aguero/e-commerse-react-bootstrap.git
+
+cd ecommerce-react-bootstrap
+```
+
+`$ npm install`
+
+
+## 📚 Endpoints de la API Utilizados
+
+### Productos:
+GET /products - Todos los productos
+
+GET /products/:id - Producto específico
+
+GET /products/categories - Todas las categorías
+
+GET /products/category/:category - Productos por categoría
+
+POST /products - Agregar nuevo producto (simulado)
+
+### 🙋‍♂️ Autenticación
+
+- POST /auth/login - Iniciar sesión
+
+Para loguearte ingresa a https://fakestoreapi.com/users
+Podes logearte con cualquier de los usuarios para probar las
+funcionalidades de la aplicación como administrador.
+
+## 🎯 Estructura del Proyecto
+
+```
+src/
+├── components/          # Componentes reutilizables
+│   ├── CategoryCard.jsx
+│   ├── Header.jsx
+│   ├── Footer.jsx
+│   └── ProductCart.jsx
+├── context/          # Contextos de React
+│   ├── AuthContext.jsx
+│   ├── CartContext.jsx
+├── pages/   
+|   ├── Administracion.jsx       
+|   ├── CartPage.jsx
+│   ├── Home.jsx
+│   ├── Productos.jsx
+│   ├── NoEncontrado.jsx
+│   └── UserProfile/
+├── routes/           # Servicios de API
+│   └── AppRoutes.jsx
+│   └── RutaProtegida.jsx   
+├── utils/              # Utilidades
+│   └── categories.js   
+│   └── featuredProducts.js   
+```
+
+## 📝 Licencia
+
+Este proyecto está licenciado bajo licencia MIT.
+
+---
+
+Creado con mucho ♥ por Gabriel Agüero [Linkedin](https://www.linkedin.com/in/gabrielhaguero/)
+
+# --- No olvides dejar tu ⭐ ---
